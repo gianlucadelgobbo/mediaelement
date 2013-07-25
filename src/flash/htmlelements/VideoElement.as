@@ -214,6 +214,15 @@ public class VideoElement extends Sprite implements IMediaElement
         _bufferEmpty ? sendEvent(HtmlMediaEvent.ENDED) : null;
         break;
 
+      case "NetStream.Video.DimensionChange":
+        // manually trigger metadata event when streaming VP6, which wont trigger onMetaData,
+        // in order for FlashMediaElement to set native dimensions
+        trace("VIDEO DIMENSION RECEIVED: " + _video.videoWidth + "X" + _video.videoHeight);
+        _videoWidth = _video.videoWidth;
+        _videoHeight = _video.videoHeight;
+        sendEvent(HtmlMediaEvent.LOADEDMETADATA);
+        break;
+
     }
   }
 
